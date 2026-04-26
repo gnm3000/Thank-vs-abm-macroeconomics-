@@ -1,6 +1,6 @@
 id: financial_crisis
-title: Crisis Financiera con Contagio
-summary: Quiebra de banco sistémico genera credit crunch y contagio de balances.
+title: Financial Crisis with Contagion
+summary: A systemic bank failure triggers a credit crunch and balance-sheet contagion.
 expected: divergence
 thank_bias: underestimates recession
 abm_features:

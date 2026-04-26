@@ -1,6 +1,6 @@
 id: supply_shock
-title: Shock de Oferta con Desigualdad
-summary: Shock de commodities con impacto asimétrico entre hogares.
+title: Supply Shock with Inequality
+summary: Commodity shock with asymmetric impact across households.
 expected: strong_divergence
 thank_bias: smooths heterogeneity
 abm_features:
