@@ -5,10 +5,10 @@ library(tidyr)
 library(igraph)
 library(viridis)
 
-source("app/modules/thank_model.R")
-source("app/modules/abm_model.R")
-source("app/modules/comparison.R")
-source("app/modules/scenario_loader.R")
+source("modules/thank_model.R")
+source("modules/abm_model.R")
+source("modules/comparison.R")
+source("modules/scenario_loader.R")
 
 app_server <- function(input, output, session) {
   simulations <- eventReactive(input$run_sim, {

@@ -62,7 +62,11 @@ thank_simulate <- function(
   cum_output <- cumsum(x)
   horizons <- c(1, 4, 8, 12)
   horizons <- horizons[horizons <= T]
-  multiplier <- (cum_output[horizons] / (transfer / 100))
+  multiplier <- if (abs(transfer) < 1e-8) {
+    rep(NA_real_, length(horizons))
+  } else {
+    cum_output[horizons] / (transfer / 100)
+  }
 
   multipliers <- tibble(
     horizon = horizons,

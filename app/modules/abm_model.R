@@ -27,6 +27,7 @@ abm_single_run <- function(
   inflation <- rep(0.02, T)
   income_gini <- rep(0, T)
   consumption_gini <- rep(0, T)
+  avg_markup <- rep(markup_mean, T)
 
   contagion_edges <- tibble(from = integer(), to = integer(), weight = numeric())
 
@@ -35,6 +36,9 @@ abm_single_run <- function(
 
   for (tt in 2:T) {
     demand_signal <- mean(consumption) / mean(income)
+    competition_pressure <- 1 / sqrt(max(N_firms, 1))
+    markup_shock <- rnorm(1, 0, 0.01)
+    avg_markup[tt] <- pmax(0.02, 0.7 * avg_markup[tt - 1] + 0.3 * markup_mean + markup_shock - 0.2 * competition_pressure)
     credit_supply <- pmax(0.2, rnorm(1, mean = credit_multiplier / 10, sd = 0.1))
 
     scenario_drag <- switch(
@@ -53,12 +57,14 @@ abm_single_run <- function(
     }
 
     panic <- if (scenario == "liquidity_trap" && tt > 5) runif(1, 0.05, 0.15) else 0
-    output[tt] <- 0.55 * output[tt - 1] + 0.5 * (demand_signal - 0.8) + 0.15 * credit_supply + scenario_drag - panic
+    pricing_drag <- 0.12 * (avg_markup[tt] - 0.15)
+    firm_scaling <- pmin(1.25, 0.7 + log1p(N_firms) / log(100))
+    output[tt] <- 0.55 * output[tt - 1] + 0.5 * (demand_signal - 0.8) * firm_scaling + 0.15 * credit_supply + scenario_drag - panic - pricing_drag
 
     unemployment_shock <- pmax(0, -output[tt] * runif(1, 0.15, 0.35))
     employment[tt] <- pmax(0.65, pmin(0.98, employment[tt - 1] - unemployment_shock + runif(1, -0.01, 0.01)))
 
-    inflation[tt] <- 0.6 * inflation[tt - 1] + 0.3 * output[tt] + ifelse(scenario == "supply_shock", 0.01, 0)
+    inflation[tt] <- 0.6 * inflation[tt - 1] + 0.3 * output[tt] + 0.35 * (avg_markup[tt] - 0.1) + ifelse(scenario == "supply_shock", 0.01, 0)
 
     income <- pmax(0.01, income * (1 + output[tt] + rnorm(N_households, 0, 0.02)))
     consumption_prop <- pmin(1.1, pmax(0.5, 0.65 + 0.25 * (income / (wealth + 1)) + rnorm(N_households, 0, 0.04) - panic))
@@ -83,7 +89,7 @@ abm_single_run <- function(
 
   list(
     macro = tibble(t = seq_len(T), output = output, inflation = inflation, employment = employment,
-                   income_gini = income_gini, consumption_gini = consumption_gini),
+                   avg_markup = avg_markup, income_gini = income_gini, consumption_gini = consumption_gini),
     gain_loss = tibble(decile = seq_len(10), value = as.numeric(gain_loss)),
     contagion = contagion_edges
   )
