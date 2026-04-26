@@ -1,0 +1,11 @@
+id: financial_crisis
+title: Crisis Financiera con Contagio
+summary: Quiebra de banco sistémico genera credit crunch y contagio de balances.
+expected: divergence
+thank_bias: underestimates recession
+abm_features:
+  - interbank contagion
+  - nonlinear unemployment
+params:
+  default_prob_shock: 0.25
+  credit_tightening: 0.4
