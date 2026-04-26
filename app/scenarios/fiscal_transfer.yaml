@@ -1,6 +1,6 @@
 id: fiscal_transfer
-title: Transferencia Fiscal
-summary: Gobierno transfiere 3% del PIB a hogares de bajos ingresos con inflación preexistente.
+title: Fiscal Transfer
+summary: The government transfers 3% of GDP to low-income households with pre-existing inflation.
 expected: convergence
 thank_bias: low
 abm_features:

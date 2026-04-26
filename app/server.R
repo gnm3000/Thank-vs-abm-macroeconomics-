@@ -47,7 +47,7 @@ app_server <- function(input, output, session) {
       pivot_longer(-t, names_to = "series", values_to = "value")
 
     plot_ly(df, x = ~t, y = ~value, color = ~series, type = "scatter", mode = "lines") %>%
-      layout(title = "IRF THANK", xaxis = list(title = "Trimestre"), yaxis = list(title = "Respuesta"))
+      layout(title = "IRF THANK", xaxis = list(title = "Quarter"), yaxis = list(title = "Response"))
   })
 
   output$thank_multipliers <- renderTable({
@@ -57,7 +57,7 @@ app_server <- function(input, output, session) {
   output$thank_consumption_plot <- renderPlotly({
     df <- simulations()$thank$consumption_distribution
     plot_ly(df, x = ~group, y = ~average_consumption_response, type = "bar", color = ~group) %>%
-      layout(title = "Consumo promedio por tipo")
+      layout(title = "Average consumption by type")
   })
 
   output$abm_fan_chart <- renderPlotly({
@@ -66,8 +66,8 @@ app_server <- function(input, output, session) {
     plot_ly(df, x = ~t) %>%
       add_ribbons(ymin = ~p10, ymax = ~p90, name = "P10-P90", fillcolor = "rgba(76, 201, 240, 0.15)", line = list(color = "transparent")) %>%
       add_ribbons(ymin = ~p25, ymax = ~p75, name = "P25-P75", fillcolor = "rgba(72, 149, 239, 0.25)", line = list(color = "transparent")) %>%
-      add_lines(y = ~p50, name = "P50 (mediana)", line = list(color = "#f72585", width = 3)) %>%
-      layout(title = "ABM Fan Chart (Output)", yaxis = list(title = "Output"), xaxis = list(title = "Trimestre"))
+      add_lines(y = ~p50, name = "P50 (median)", line = list(color = "#f72585", width = 3)) %>%
+      layout(title = "ABM Fan Chart (Output)", yaxis = list(title = "Output"), xaxis = list(title = "Quarter"))
   })
 
   output$abm_gini_plot <- renderPlotly({
@@ -75,21 +75,21 @@ app_server <- function(input, output, session) {
       pivot_longer(cols = c(income_gini, consumption_gini), names_to = "series", values_to = "value")
 
     plot_ly(df, x = ~t, y = ~value, color = ~series, type = "scatter", mode = "lines") %>%
-      layout(title = "Evolución Gini", yaxis = list(title = "Gini"), xaxis = list(title = "Trimestre"))
+      layout(title = "Gini evolution", yaxis = list(title = "Gini"), xaxis = list(title = "Quarter"))
   })
 
   output$abm_contagion_plot <- renderPlot({
     sim <- simulations()
     if (input$scenario != "financial_crisis") {
       plot.new()
-      text(0.5, 0.5, "Red de contagio disponible solo en Crisis Financiera", cex = 1)
+      text(0.5, 0.5, "Contagion network available only in Financial Crisis", cex = 1)
       return(invisible(NULL))
     }
 
     g <- sim$abm$contagion_graph
     if (ecount(g) == 0) {
       plot.new()
-      text(0.5, 0.5, "No se detectaron enlaces de contagio", cex = 1)
+      text(0.5, 0.5, "No contagion links detected", cex = 1)
       return(invisible(NULL))
     }
     plot(g, vertex.size = 20, vertex.color = "tomato", edge.arrow.size = 0.3)
@@ -105,7 +105,7 @@ app_server <- function(input, output, session) {
       colorscale = "RdBu",
       reversescale = TRUE
     ) %>%
-      layout(title = "Mapa de calor: ganadores/perdedores por decil", yaxis = list(showticklabels = FALSE), xaxis = list(title = "Decil"))
+      layout(title = "Heatmap: winners/losers by decile", yaxis = list(showticklabels = FALSE), xaxis = list(title = "Decile"))
   })
 
   output$comparison_overlay <- renderPlotly({
@@ -121,20 +121,20 @@ app_server <- function(input, output, session) {
       add_ribbons(ymin = ~p25, ymax = ~p75, name = "ABM P25-P75", fillcolor = "rgba(58, 134, 255, 0.2)", line = list(color = "transparent")) %>%
       add_lines(y = ~p50, name = "ABM P50", line = list(color = "#3a86ff", width = 2)) %>%
       add_lines(data = thank, y = ~output_gap, name = "THANK", line = list(color = "#ff006e", width = 3)) %>%
-      layout(title = "Comparación de trayectorias (Output)")
+      layout(title = "Trajectory comparison (Output)")
   })
 
   output$divergence_metrics <- renderPrint({
     div <- simulations()$divergence
     cat(sprintf("RMSE: %.4f\n", div$rmse))
-    cat(sprintf("Índice normalizado: %.4f\n", div$normalized))
+    cat(sprintf("Normalized index: %.4f\n", div$normalized))
   })
 
   output$traffic_light_ui <- renderUI({
     div <- simulations()$divergence
 
     color <- switch(div$status, green = "#38b000", yellow = "#ffbe0b", red = "#e63946")
-    label <- switch(div$status, green = "VERDE: convergen", yellow = "AMARILLO: divergencia parcial", red = "ROJO: divergen")
+    label <- switch(div$status, green = "GREEN: converging", yellow = "YELLOW: partial divergence", red = "RED: diverging")
 
     tags$div(
       style = sprintf("display:flex;align-items:center;gap:12px;margin:12px 0;"),

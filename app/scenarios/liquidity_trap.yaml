@@ -1,6 +1,6 @@
 id: liquidity_trap
-title: Trampa de Liquidez con ZLB
-summary: Tasa nominal en cero con deflación y pánico de demanda.
+title: Liquidity Trap with ZLB
+summary: Nominal rate at zero with deflation and demand panic.
 expected: thank_failure
 thank_bias: fails in panic regime
 abm_features:

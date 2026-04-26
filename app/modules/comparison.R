@@ -22,20 +22,20 @@ comparison_message <- function(status, scenario, thank_path, abm_path) {
   gap <- (mean(abm_path, na.rm = TRUE) - mean(thank_path, na.rm = TRUE)) * 100
 
   if (status == "green") {
-    return("✅ Los supuestos NK se sostienen en este escenario.")
+    return("✅ NK assumptions hold in this scenario.")
   }
 
   if (status == "yellow") {
-    return(sprintf("⚠️ THANK subestima la dinámica de output en %.1f%% respecto al ABM.", abs(gap)))
+    return(sprintf("⚠️ THANK underestimates output dynamics by %.1f%% relative to ABM.", abs(gap)))
   }
 
   reason <- switch(
     scenario,
-    financial_crisis = "se rompe el supuesto de mercados financieros pasivos y aparece contagio de crédito",
-    supply_shock = "la heterogeneidad distributiva se vuelve no lineal y THANK la promedia en exceso",
-    liquidity_trap = "las expectativas racionales no capturan el pánico y la contracción endógena de demanda",
-    "sus supuestos estructurales se rompen bajo no linealidades de agentes"
+    financial_crisis = "the passive-financial-markets assumption breaks and credit contagion emerges",
+    supply_shock = "distributional heterogeneity becomes nonlinear and THANK over-averages it",
+    liquidity_trap = "rational expectations do not capture panic and endogenous demand contraction",
+    "its structural assumptions break under agent nonlinearities"
   )
 
-  sprintf("🔴 THANK falla porque %s.", reason)
+  sprintf("🔴 THANK fails because %s.", reason)
 }
