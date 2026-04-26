@@ -134,6 +134,20 @@ install.packages(c(
 shiny::runApp("app")
 ```
 
+## Run with Docker Compose
+
+```bash
+docker compose up --build
+```
+
+Then open `http://localhost:3838`.
+
+To stop the services:
+
+```bash
+docker compose down
+```
+
 ---
 
 ## Executive summary
