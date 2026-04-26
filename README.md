@@ -142,3 +142,61 @@ shiny::runApp("app")
 - ABM aporta realismo de interacción y validación en escenarios extremos.
 - La combinación THANK+ABM mejora la calidad de inferencia y reduce riesgo de recomendaciones frágiles.
 - En macro aplicada, **comparar ambos no es redundancia: es control de calidad científico**.
+
+
+---
+
+## Resumen ampliado: por qué el doble enfoque THANK + ABM importa
+
+### La analogía más clara
+Pensalo como un ingeniero estructural que diseña un puente con dos herramientas:
+
+- **Cálculo analítico**: rápido, auditable, fácil de comunicar.
+- **Simulación de elementos finitos (FEM)**: más costosa, pero captura efectos que las fórmulas simplificadas no ven.
+
+Para casos rutinarios, la herramienta analítica puede alcanzar. Para escenarios extremos (viento lateral, sismo, fatiga estructural simultánea), la simulación deja de ser opcional. En macroeconomía sucede lo mismo: cuando hay riesgo de ruptura de régimen, usar un solo marco puede inducir errores severos de diagnóstico.
+
+### La razón epistemológica de fondo
+El punto no es solo técnico: es **qué tipo de certeza se comunica**.
+
+- THANK puede dar números precisos y limpios para política.
+- Pero esos números dependen de supuestos (expectativas racionales, linealización local, mercados financieros simplificados, estabilidad distributiva).
+- Si esos supuestos fallan, la predicción no solo pierde precisión: puede equivocarse en dirección.
+
+El ABM complementa porque no obliga esa suavidad estructural y ayuda a identificar cuándo “el número limpio” deja de ser confiable.
+
+### Cuatro casos donde el doble análisis es fuertemente recomendable
+1. **No linealidades potenciales**: crisis bancaria, corrida cambiaria, pánico.
+2. **Distribución en transición**: shocks post-crisis, post-reformas o post-conflicto.
+3. **Canal financiero central**: crédito, apalancamiento, spreads y contagio.
+4. **Expectativas desancladas**: alta incertidumbre, episodios de pánico, ZLB persistente.
+
+### La trampa simétrica: usar solo ABM también puede fallar
+- Menor trazabilidad causal para comunicación de política.
+- Mayor sensibilidad a supuestos de comportamiento/calibración.
+- Menor aceptación en ciertos circuitos de evaluación formal.
+
+Por eso este proyecto no plantea reemplazo, sino **complementariedad disciplinada**: THANK para estructura e interpretación; ABM para robustez externa y escenarios de cola.
+
+### Regla operativa sugerida
+| Situación | Solo THANK | Solo ABM | Doble enfoque |
+|---|---|---|---|
+| Ajuste de tasa rutinario | ✅ | ❌ | Opcional |
+| Política fiscal moderada | ✅ | ❌ | Opcional |
+| Crisis bancaria sistémica | ❌ | ❌ | ✅ |
+| Reforma distributiva grande | ❌ | ❌ | ✅ |
+| Shock externo severo (emergente) | ❌ | ❌ | ✅ |
+| Trampa de liquidez / ZLB | ❌ | ❌ | ✅ |
+| Stress test regulatorio | ❌ | ✅ | Opcional |
+
+### Integración en bancos centrales (síntesis)
+La práctica reciente en bancos centrales avanzados combina marcos estructurales (DSGE/HANK/THANK) con ABMs en capas:
+
+1. **Forecast base y comunicación** con modelos estructurales.
+2. **Stress testing financiero** con ABMs de red/contagio.
+3. **Escenarios extremos/no lineales** con ABMs macro heterogéneos.
+
+La lectura práctica para este repositorio es directa: no usar ABM como contraste puede dejar supuestos THANK sin validación externa y reducir robustez analítica en los episodios donde más importa acertar.
+
+### Síntesis en una frase
+> **THANK te dice la respuesta óptima dentro del modelo; ABM te dice si el modelo sobrevive al contacto con la realidad.**
