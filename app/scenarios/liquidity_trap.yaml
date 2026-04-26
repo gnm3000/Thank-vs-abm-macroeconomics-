@@ -1,0 +1,11 @@
+id: liquidity_trap
+title: Trampa de Liquidez con ZLB
+summary: Tasa nominal en cero con deflación y pánico de demanda.
+expected: thank_failure
+thank_bias: fails in panic regime
+abm_features:
+  - heuristic switching
+  - endogenous demand collapse
+params:
+  zlb: true
+  panic_intensity: 0.12

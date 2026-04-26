@@ -1,0 +1,9 @@
+parameter,value,source
+lambda,0.35,"Kaplan & Violante (2014)"
+iMPC_poor,0.80,"Fagereng et al. (2021)"
+iMPC_rich,0.05,"Calibration assumption"
+phi_pi,1.50,"Taylor (1993)"
+phi_y,0.125,"Taylor (1993)"
+wealth_gini,0.45,"SCF stylized benchmark"
+markup_mean,0.15,"Dosi et al. (2013)"
+credit_multiplier,8,"ABM banking calibration"

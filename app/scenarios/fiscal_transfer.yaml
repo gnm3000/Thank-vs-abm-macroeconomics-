@@ -1,0 +1,11 @@
+id: fiscal_transfer
+title: Transferencia Fiscal
+summary: Gobierno transfiere 3% del PIB a hogares de bajos ingresos con inflación preexistente.
+expected: convergence
+thank_bias: low
+abm_features:
+  - heterogenous mpcs
+  - distributional gains
+params:
+  transfer: 3
+  initial_inflation: 0.06

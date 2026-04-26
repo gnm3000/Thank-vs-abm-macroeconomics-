@@ -1,0 +1,11 @@
+id: supply_shock
+title: Shock de Oferta con Desigualdad
+summary: Shock de commodities con impacto asimétrico entre hogares.
+expected: strong_divergence
+thank_bias: smooths heterogeneity
+abm_features:
+  - decile-level inflation incidence
+  - adaptive pricing
+params:
+  commodity_shock: 0.03
+  inequality_exposure: 0.6
