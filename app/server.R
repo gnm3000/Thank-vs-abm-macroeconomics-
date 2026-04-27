@@ -12,6 +12,25 @@ source("modules/scenario_loader.R")
 
 app_server <- function(input, output, session) {
   simulations <- eventReactive(input$run_sim, {
+    req(
+      !is.null(input$run_sim),
+      !is.null(input$lambda),
+      !is.null(input$iMPC_poor),
+      !is.null(input$iMPC_rich),
+      !is.null(input$transfer),
+      !is.null(input$phi_pi),
+      !is.null(input$phi_y),
+      !is.null(input$rho_shock),
+      !is.null(input$scenario),
+      !is.null(input$N_households),
+      !is.null(input$N_firms),
+      !is.null(input$N_banks),
+      !is.null(input$markup_mean),
+      !is.null(input$credit_multiplier),
+      !is.null(input$abm_T),
+      !is.null(input$mc_runs)
+    )
+
     thank <- thank_simulate(
       lambda = input$lambda,
       iMPC_poor = input$iMPC_poor,
