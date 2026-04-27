@@ -47,6 +47,41 @@ app/
 
 ---
 
+## ¿Qué es THANK y qué es ABM? (explicación conceptual)
+
+```mermaid
+flowchart LR
+    A[Problema macroeconómico común] --> B[Motor THANK]
+    A --> C[Motor ABM]
+    B --> B1["Estructura analítica<br/>ecuaciones agregadas"]
+    B --> B2["Supuestos de tractabilidad<br/>(linealización local)"]
+    B --> B3["Salida: trayectorias limpias<br/>y lectura causal rápida"]
+    C --> C1["Agentes heterogéneos<br/>hogares, firmas, bancos"]
+    C --> C2["Interacciones no lineales<br/>redes y contagio"]
+    C --> C3["Salida: distribuciones,<br/>colas de riesgo y regímenes"]
+    B3 --> D[Panel de comparación]
+    C3 --> D
+```
+
+En este proyecto, **THANK** funciona como la capa estructural rápida para interpretar mecanismos de política, y **ABM** como la capa de estrés para validar si esa lectura sobrevive cuando hay heterogeneidad fuerte, fricciones financieras o cambios de régimen.
+
+```mermaid
+flowchart TD
+    S[Escenario seleccionado] --> P[Parámetros compartidos]
+    P --> T[Implementación THANK]
+    P --> M[Implementación ABM]
+    T --> T1["Bloque IS + Phillips + regla monetaria/fiscal"]
+    T1 --> T2["Simulación agregada por horizonte temporal"]
+    M --> M1["Inicialización de agentes y red"]
+    M1 --> M2["Dinámica micro: decisiones, crédito, defaults"]
+    M2 --> M3["Agregación de resultados: mediana, dispersión"]
+    T2 --> C[Comparador THANK vs ABM]
+    M3 --> C
+    C --> O["Índice de divergencia + semáforo"]
+```
+
+---
+
 ## Implemented scenarios and theoretical interpretation
 
 ### 1) Fiscal transfer (expected convergence)
@@ -67,6 +102,25 @@ app/
 - **Intuition**: with the policy rate at zero and unstable expectations, behavior is neither smooth nor linear.
 - **THANK**: may have a formal solution but lose behavioral realism.
 - **ABM**: allows heuristic switching and endogenous demand collapse.
+
+### Mapa de implementación por use case (THANK vs ABM)
+
+```mermaid
+flowchart TB
+    U1["Use case 1: Fiscal transfer"] --> U1T["THANK: multiplicador fiscal y respuesta agregada"]
+    U1["Use case 1: Fiscal transfer"] --> U1A["ABM: respuesta por tipo de hogar y restricción de liquidez"]
+
+    U2["Use case 2: Financial crisis"] --> U2T["THANK: choque financiero agregado (sin red explícita)"]
+    U2["Use case 2: Financial crisis"] --> U2A["ABM: red crédito-interbancaria, defaults y contagio"]
+
+    U3["Use case 3: Supply shock + inequality"] --> U3T["THANK: pass-through promedio e inflación agregada"]
+    U3["Use case 3: Supply shock + inequality"] --> U3A["ABM: canastas y exposición heterogénea por decil"]
+
+    U4["Use case 4: ZLB + panic"] --> U4T["THANK: solución formal con límites de linealidad"]
+    U4["Use case 4: ZLB + panic"] --> U4A["ABM: cambio heurístico de expectativas y colapso de demanda"]
+```
+
+Este mapa resume cómo se implementa cada escenario en ambos motores: THANK prioriza la claridad estructural y ABM prioriza la riqueza de comportamiento para detectar fragilidad fuera del entorno de supuestos.
 
 ---
 
